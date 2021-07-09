@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+    <style>
+        .alert{
+            padding: 25px;
+            background: greenyellow;
+            color: white;
+        }
+    </style>
+
+        {% for tab in tableau %}
+            <ul>
+                <li>{{ tab.nom }}</li>
+                <li>{{ tab.prenom }}</li>
+                <li>{{ tab.age }}</li>
+
+            </ul>
+        {% endfor %}
+
+    {% for message in app.flashes('success')  %}
+        <div class="alert">
+            {{ message}}
+        </div>
+    {% endfor %}
+
+    {{ form(form) }}
+
+
+{% endblock %}
