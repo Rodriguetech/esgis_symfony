@@ -1,33 +1,19 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil{% endblock %}
 
 {% block body %}
 
-    <style>
-        .alert{
-            padding: 25px;
-            background: greenyellow;
-            color: white;
-        }
-    </style>
-
-        {% for tab in tableau %}
-            <ul>
-                <li>{{ tab.nom }}</li>
-                <li>{{ tab.prenom }}</li>
-                <li>{{ tab.age }}</li>
-
-            </ul>
-        {% endfor %}
-
-    {% for message in app.flashes('success')  %}
-        <div class="alert">
-            {{ message}}
+    <section class="m-5">
+        <div class="container ">
+            <div class="row">
+                <div class="col ">
+                    <a href="{{ path('pays_add') }}" class="btn btn-success ml-5">Ajouter un Pays </a>
+                    <a href="{{ path('musee_add') }}" class="btn btn-success">Ajouter un musée</a>
+                </div>
+            </div>
         </div>
-    {% endfor %}
-
-    {{ form(form) }}
+    </section>
 
 
 {% endblock %}

@@ -34,9 +34,21 @@ class Pays
      */
     private $musees;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Ouvrage::class, mappedBy="codepays")
+     */
+    private $ouvrages;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Site::class, mappedBy="codePays")
+     */
+    private $sites;
+
     public function __construct()
     {
         $this->musees = new ArrayCollection();
+        $this->ouvrages = new ArrayCollection();
+        $this->sites = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,6 +104,66 @@ class Pays
             // set the owning side to null (unless already changed)
             if ($musee->getPays() === $this) {
                 $musee->setPays(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Ouvrage[]
+     */
+    public function getOuvrages(): Collection
+    {
+        return $this->ouvrages;
+    }
+
+    public function addOuvrage(Ouvrage $ouvrage): self
+    {
+        if (!$this->ouvrages->contains($ouvrage)) {
+            $this->ouvrages[] = $ouvrage;
+            $ouvrage->setCodepays($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOuvrage(Ouvrage $ouvrage): self
+    {
+        if ($this->ouvrages->removeElement($ouvrage)) {
+            // set the owning side to null (unless already changed)
+            if ($ouvrage->getCodepays() === $this) {
+                $ouvrage->setCodepays(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Site[]
+     */
+    public function getSites(): Collection
+    {
+        return $this->sites;
+    }
+
+    public function addSite(Site $site): self
+    {
+        if (!$this->sites->contains($site)) {
+            $this->sites[] = $site;
+            $site->setCodePays($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSite(Site $site): self
+    {
+        if ($this->sites->removeElement($site)) {
+            // set the owning side to null (unless already changed)
+            if ($site->getCodePays() === $this) {
+                $site->setCodePays(null);
             }
         }
 

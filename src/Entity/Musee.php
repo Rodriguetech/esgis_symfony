@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MuseeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,23 @@ class Musee
      * @ORM\ManyToOne(targetEntity=Pays::class, inversedBy="musees")
      */
     private $pays;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Visiter::class, mappedBy="numMusee")
+     */
+    private $visiters;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Bibliothque::class, mappedBy="numMus")
+     */
+    private $bibliothques;
+
+    public function __construct()
+    {
+        $this->visiters = new ArrayCollection();
+        $this->bibliothques = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -89,4 +108,65 @@ class Musee
 
         return $this;
     }
+
+    /**
+     * @return Collection|Visiter[]
+     */
+    public function getVisiters(): Collection
+    {
+        return $this->visiters;
+    }
+
+    public function addVisiter(Visiter $visiter): self
+    {
+        if (!$this->visiters->contains($visiter)) {
+            $this->visiters[] = $visiter;
+            $visiter->setNumMusee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVisiter(Visiter $visiter): self
+    {
+        if ($this->visiters->removeElement($visiter)) {
+            // set the owning side to null (unless already changed)
+            if ($visiter->getNumMusee() === $this) {
+                $visiter->setNumMusee(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Bibliothque[]
+     */
+    public function getBibliothques(): Collection
+    {
+        return $this->bibliothques;
+    }
+
+    public function addBibliothque(Bibliothque $bibliothque): self
+    {
+        if (!$this->bibliothques->contains($bibliothque)) {
+            $this->bibliothques[] = $bibliothque;
+            $bibliothque->setNumMus($this);
+        }
+
+        return $this;
+    }
+
+    public function removeBibliothque(Bibliothque $bibliothque): self
+    {
+        if ($this->bibliothques->removeElement($bibliothque)) {
+            // set the owning side to null (unless already changed)
+            if ($bibliothque->getNumMus() === $this) {
+                $bibliothque->setNumMus(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

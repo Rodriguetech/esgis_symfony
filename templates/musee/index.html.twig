@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Musée{% endblock %}
+
+{% block body %}
+
+
+    {% for mu in musee %}
+
+        {{ mu.numMus }}
+
+        {{ mu.nomMus }}
+
+        {{ mu.nbLivres }}
+
+
+    {% endfor %}
+
+{% endblock %}
