@@ -30,10 +30,10 @@ class MuseeType extends AbstractType
             ])
             ->add('pays', EntityType::class, [
                 'class' => Pays::class,
-                /*'query_builder' => function (PaysRepository $er) {
+                'query_builder' => function (PaysRepository $er) {
                     return $er->createQueryBuilder('p')
                         ->orderBy('p.codePays', 'ASC');
-                },*/
+                },
                 'choice_label' => 'codePays',
             ])
 
