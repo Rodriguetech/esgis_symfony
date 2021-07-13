@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Moment;
 use App\Entity\Visiter;
+use App\Form\MomentType;
 use App\Form\VisiterType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,6 +45,28 @@ class VisiterController extends AbstractController
         }
 
         return $this->render('visiter/add.html.twig',[
+            'form' => $form->createView(),
+        ]);
+    }
+
+
+    #[Route('/visiter/moment', name: 'visiter_moment')]
+    public function moment(Request $request): Response
+    {
+        $moment = new Moment();
+        $form = $this->createForm(MomentType::class, $moment);
+        $form ->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $moment = $form ->getData();
+
+            $this->em->persist($moment);
+            $this->em->flush();
+
+            $this->addFlash("success" , "Visiteur crée avec succès");
+        }
+
+        return $this->render('visiter/moment.html.twig',[
             'form' => $form->createView(),
         ]);
     }

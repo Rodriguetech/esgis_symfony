@@ -19,15 +19,16 @@ class Moment
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $jour;
 
     /**
      * @ORM\OneToMany(targetEntity=Visiter::class, mappedBy="jour")
      */
     private $visiters;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $jour;
 
     public function __construct()
     {
@@ -39,17 +40,7 @@ class Moment
         return $this->id;
     }
 
-    public function getJour(): ?\DateTimeInterface
-    {
-        return $this->jour;
-    }
 
-    public function setJour(\DateTimeInterface $jour): self
-    {
-        $this->jour = $jour;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Visiter[]
@@ -77,6 +68,18 @@ class Moment
                 $visiter->setJour(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getJour(): ?string
+    {
+        return $this->jour;
+    }
+
+    public function setJour(string $jour): self
+    {
+        $this->jour = $jour;
 
         return $this;
     }

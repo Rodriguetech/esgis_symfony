@@ -26,7 +26,7 @@ class MuseeType extends AbstractType
                 'label' => 'Nom  du musée'
             ])
             ->add('nbLivres', IntegerType::class, [
-                'label' => 'Nombre  de  musée'
+                'label' => 'Nombre  de  livre'
             ])
             ->add('pays', EntityType::class, [
                 'class' => Pays::class,
@@ -38,6 +38,7 @@ class MuseeType extends AbstractType
             ])
 
             ->add('submit', SubmitType::class,[
+                'label' => "Enrégister"
             ])
         ;
     }
